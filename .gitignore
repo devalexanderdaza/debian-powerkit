@@ -1,0 +1,44 @@
+# Archivos de respaldo generados por los scripts
+*.bak-*
+*.backup
+*.old
+
+# Logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.temp
+*~
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Directorios de IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de configuración local
+local_config.sh
+.env
+.env.local
+
+# Archivos de prueba personal
+test_*.sh
+prueba_*.sh
+
+# Node modules (si alguien clona el repo)
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Backups de sistema generados
+/etc/*.bak-*
