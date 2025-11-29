@@ -30,7 +30,27 @@
 - Acceso root o sudo
 - Conexión a Internet
 
-### Instalación
+### Instalación Rápida (Recomendado)
+
+Instala Debian PowerKit con un solo comando:
+
+```bash
+# Usando curl
+curl -fsSL https://raw.githubusercontent.com/devalexanderdaza/debian-powerkit/main/install.sh | bash
+
+# O usando wget
+wget -qO- https://raw.githubusercontent.com/devalexanderdaza/debian-powerkit/main/install.sh | bash
+```
+
+Después de la instalación, ejecuta:
+
+```bash
+sudo debian-powerkit
+```
+
+### Instalación Manual
+
+Si prefieres clonar el repositorio manualmente:
 
 ```bash
 # Clonar el repositorio
@@ -235,6 +255,24 @@ Espacio total a liberar: 3.2 GB
 - Se crean respaldos antes de modificar archivos del sistema
 - Confirmación del usuario antes de operaciones destructivas
 - No se modifican configuraciones de seguridad del sistema
+
+## 🗑️ Desinstalación
+
+Si necesitas desinstalar Debian PowerKit:
+
+```bash
+# Navegar al directorio de instalación
+cd ~/debian-powerkit
+
+# Ejecutar el desinstalador
+bash uninstall.sh
+```
+
+El desinstalador te permitirá:
+- Eliminar el directorio de instalación
+- Remover enlaces simbólicos
+- Opcionalmente revertir optimizaciones del sistema
+- Limpiar configuraciones del PATH
 
 ## 🤝 Contribuciones
 
