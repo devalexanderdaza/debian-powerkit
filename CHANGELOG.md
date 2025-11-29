@@ -5,6 +5,38 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
+## [No publicado]
+
+### Añadido
+
+- **Instalador de Un Comando** (`install.sh`)
+  - Instalación rápida con `curl` o `wget`
+  - Instalación automática de dependencias (git, curl/wget)
+  - Crea enlace simbólico en `~/.local/bin` para acceso fácil
+  - Añade automáticamente al PATH
+  - Salida con colores e indicadores de progreso
+  - Verificación del sistema operativo
+  - Manejo de instalaciones existentes
+  - Banner ASCII artístico
+  - Ejemplos de uso después de la instalación
+
+- **Desinstalador** (`uninstall.sh`)
+  - Desinstalación segura con confirmación
+  - Elimina directorio de instalación y enlaces simbólicos
+  - Limpia configuración del PATH
+  - Opción para revertir optimizaciones del sistema
+  - Restauración desde backups
+  - Eliminación de paquetes instalados (zram, preload)
+  - Manejo inteligente de permisos (sudo cuando es necesario)
+
+### Cambiado
+
+- **README.md** actualizado con:
+  - Sección de instalación rápida con comando de una línea
+  - Instrucciones de desinstalación
+  - Badge de release version
+  - Mejora en la documentación de instalación
+
 ## [1.0.0] - 2025-11-28
 
 ### 🎉 Lanzamiento Inicial
