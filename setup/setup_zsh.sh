@@ -133,8 +133,8 @@ install_nerd_fonts() {
     
     local fonts_dir="$TARGET_HOME/.local/share/fonts"
     
-    # Verificar si ya existen las fuentes
-    if [ -d "$fonts_dir" ] && ls "$fonts_dir"/MesloLGS* &>/dev/null 2>&1; then
+    # Verificar si ya existen las fuentes usando find (más robusto que ls)
+    if [ -d "$fonts_dir" ] && find "$fonts_dir" -maxdepth 1 -name "MesloLGS*" -type f 2>/dev/null | grep -q .; then
         log_info "Nerd Fonts (MesloLGS NF) ya están instaladas."
         return
     fi
@@ -161,9 +161,9 @@ install_nerd_fonts() {
     # Cambiar propietario de las fuentes
     chown -R "$TARGET_USER:$TARGET_USER" "$fonts_dir"
     
-    # Actualizar caché de fuentes
+    # Actualizar caché de fuentes como el usuario destino
     if command_exists fc-cache; then
-        fc-cache -f "$fonts_dir"
+        su - "$TARGET_USER" -c "fc-cache -f \"$fonts_dir\""
     fi
     
     log_info "Nerd Fonts instaladas correctamente."
@@ -200,13 +200,41 @@ install_plugins() {
     local zshrc="$TARGET_HOME/.zshrc"
     if [ -f "$zshrc" ]; then
         # Lista de plugins a configurar (incluyendo los que vienen con oh-my-zsh)
-        local plugin_list="git docker docker-compose node npm nvm python pip sudo copypath copyfile dirhistory history extract web-search zsh-autosuggestions zsh-syntax-highlighting zsh-completions zsh-history-substring-search you-should-use zsh-nvm"
+        # Separados en múltiples líneas para mejor legibilidad
+        local plugin_list=(
+            # Plugins integrados de Oh My Zsh
+            git
+            docker
+            docker-compose
+            node
+            npm
+            nvm
+            python
+            pip
+            sudo
+            copypath
+            copyfile
+            dirhistory
+            history
+            extract
+            web-search
+            # Plugins externos instalados
+            zsh-autosuggestions
+            zsh-syntax-highlighting
+            zsh-completions
+            zsh-history-substring-search
+            you-should-use
+            zsh-nvm
+        )
+        
+        # Convertir array a string para sed
+        local plugin_string="${plugin_list[*]}"
         
         # Reemplazar la línea de plugins
         if grep -q "^plugins=(" "$zshrc"; then
-            sed -i "s/^plugins=(.*/plugins=($plugin_list)/" "$zshrc"
+            sed -i "s/^plugins=(.*/plugins=($plugin_string)/" "$zshrc"
         else
-            echo "plugins=($plugin_list)" >> "$zshrc"
+            echo "plugins=($plugin_string)" >> "$zshrc"
         fi
         
         log_info "Plugins configurados en .zshrc"
@@ -247,12 +275,15 @@ import_bashrc_config() {
     fi
     
     # Extraer configuraciones útiles de .bashrc
-    local temp_import=$(mktemp)
+    local temp_import
+    temp_import=$(mktemp)
     
-    echo "" >> "$temp_import"
-    echo "$marker" >> "$temp_import"
-    echo "# Importado automáticamente por debian-powerkit" >> "$temp_import"
-    echo "" >> "$temp_import"
+    {
+        echo ""
+        echo "$marker"
+        echo "# Importado automáticamente por debian-powerkit"
+        echo ""
+    } >> "$temp_import"
     
     # Importar aliases
     grep -E "^alias " "$bashrc" >> "$temp_import" 2>/dev/null || true
@@ -260,16 +291,17 @@ import_bashrc_config() {
     # Importar exports (excepto PATH que puede causar conflictos)
     grep -E "^export " "$bashrc" | grep -v "^export PATH=" >> "$temp_import" 2>/dev/null || true
     
-    # Importar funciones (bloques function name() { ... })
-    # Esto es más complejo, importamos solo las líneas que definen funciones simples
-    grep -E "^[a-zA-Z_][a-zA-Z0-9_]*\(\)" "$bashrc" >> "$temp_import" 2>/dev/null || true
+    # Nota: No importamos funciones ya que requieren extracción multi-línea compleja
+    # El usuario puede copiarlas manualmente si las necesita
     
-    # Importar variables de entorno personalizadas
+    # Importar variables de entorno personalizadas (asignaciones simples)
     grep -E "^[A-Z_][A-Z0-9_]*=" "$bashrc" | grep -v "^PATH=" >> "$temp_import" 2>/dev/null || true
     
-    echo "" >> "$temp_import"
-    echo "$end_marker" >> "$temp_import"
-    echo "" >> "$temp_import"
+    {
+        echo ""
+        echo "$end_marker"
+        echo ""
+    } >> "$temp_import"
     
     # Agregar al final de .zshrc
     cat "$temp_import" >> "$zshrc"
@@ -363,8 +395,10 @@ EOF
 set_default_shell() {
     log_step "Configurando zsh como shell por defecto..."
     
-    local current_shell=$(getent passwd "$TARGET_USER" | cut -d: -f7)
-    local zsh_path=$(which zsh)
+    local current_shell
+    local zsh_path
+    current_shell=$(getent passwd "$TARGET_USER" | cut -d: -f7)
+    zsh_path=$(command -v zsh)
     
     if [ "$current_shell" = "$zsh_path" ]; then
         log_info "zsh ya es el shell por defecto para $TARGET_USER."
@@ -408,7 +442,7 @@ main() {
     CHOICES=$(dialog --clear \
                     --backtitle "Debian PowerKit - Configuración de Zsh" \
                     --title "Configuración de Zsh con Oh My Zsh y Powerlevel10k" \
-                    --checklist "Usa la barra espaciadora para seleccionar/deseleccionar.\nTodos los componentes están preseleccionados por defecto." \
+                    --checklist "Usa la barra espaciadora para seleccionar/deseleccionar. Todos los componentes están preseleccionados por defecto." \
                     20 75 8 \
                     "${OPTIONS[@]}" \
                     2>&1 >/dev/tty)
