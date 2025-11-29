@@ -16,6 +16,7 @@
 
 - 🎯 **Menú interactivo unificado** con interfaz `dialog`
 - 🔧 **Configuración automatizada** de entornos de desarrollo
+- 🐚 **Configuración de Zsh** con Oh My Zsh, Powerlevel10k y plugins populares
 - ⚡ **Optimizaciones de rendimiento** para CPU, memoria y red
 - 🧹 **Herramientas de limpieza avanzadas** para liberar espacio
 - 💾 **Sistema de respaldos automáticos** antes de modificar configuraciones
@@ -70,7 +71,8 @@ sudo ./run.sh
 .
 ├── run.sh                    # Script principal con menú interactivo
 ├── setup/                    # Scripts de configuración del entorno
-│   └── setup.sh             # Instalador del entorno de desarrollo
+│   ├── setup.sh             # Instalador del entorno de desarrollo
+│   └── setup_zsh.sh         # Configuración de Zsh + Oh My Zsh + Powerlevel10k
 ├── optimization/            # Scripts de optimización del sistema
 │   └── optimize.sh          # Optimizador de rendimiento
 ├── tools/                   # Herramientas de mantenimiento
@@ -95,9 +97,10 @@ sudo ./run.sh
 
 Opciones disponibles:
 1. **Configurar Entorno de Desarrollo** - Instala herramientas de desarrollo
-2. **Optimizar el Sistema** - Aplica mejoras de rendimiento
-3. **Ejecutar Limpieza Avanzada** - Libera espacio en disco
-4. **Salir** - Cierra el asistente
+2. **Configurar Zsh + Oh My Zsh + Powerlevel10k** - Shell avanzado para desarrolladores
+3. **Optimizar el Sistema** - Aplica mejoras de rendimiento
+4. **Ejecutar Limpieza Avanzada** - Libera espacio en disco
+5. **Salir** - Cierra el asistente
 
 ### Uso Individual de Scripts
 
@@ -114,6 +117,7 @@ sudo ./setup/setup.sh
 - Node.js (mediante NVM)
 - Python 3 con pip y venv
 - Visual Studio Code
+- Zsh con Oh My Zsh, Powerlevel10k y plugins
 
 **Ejemplo de uso:**
 ```bash
@@ -122,7 +126,49 @@ sudo ./setup/setup.sh
 sudo ./setup/setup.sh
 ```
 
-#### 2. Optimización del Sistema
+#### 2. Configuración de Zsh con Oh My Zsh y Powerlevel10k
+
+```bash
+sudo ./setup/setup_zsh.sh
+```
+
+Este script configura un shell zsh profesional optimizado para desarrollo:
+
+**Componentes instalados:**
+- **Zsh**: Shell avanzado con autocompletado inteligente
+- **Oh My Zsh**: Framework de configuración para zsh
+- **Powerlevel10k**: Tema moderno con iconos y prompts informativos
+- **Nerd Fonts (MesloLGS NF)**: Fuentes con iconos para terminales
+
+**Plugins incluidos:**
+- `zsh-autosuggestions` - Sugerencias basadas en historial
+- `zsh-syntax-highlighting` - Resaltado de sintaxis en tiempo real
+- `zsh-completions` - Autocompletado mejorado
+- `zsh-history-substring-search` - Búsqueda en historial
+- `you-should-use` - Recuerda tus aliases
+- `zsh-nvm` - Carga perezosa de NVM
+- Y más plugins integrados de Oh My Zsh (git, docker, node, python, etc.)
+
+**Características adicionales:**
+- Importación automática de aliases y variables de `.bashrc`
+- Historial compartido entre sesiones
+- Aliases útiles para Git, Docker y desarrollo
+- Navegación mejorada entre directorios
+
+**Ejemplo de uso:**
+```bash
+# Ejecutar el instalador
+sudo ./setup/setup_zsh.sh
+
+# Después de la instalación, inicia una nueva sesión o ejecuta:
+zsh
+
+# La primera vez, Powerlevel10k te guiará por su configuración
+```
+
+**Nota importante:** Después de instalar, configura tu emulador de terminal para usar la fuente `MesloLGS NF` para que los iconos se muestren correctamente.
+
+#### 3. Optimización del Sistema
 
 ```bash
 sudo ./optimization/optimize.sh
@@ -145,7 +191,7 @@ sudo ./optimization/optimize.sh
 # Los backups se guardan con formato: archivo.bak-YYYYMMDD-HHMMSS
 ```
 
-#### 3. Limpieza Avanzada
+#### 4. Limpieza Avanzada
 
 ```bash
 sudo ./tools/cleanup.sh

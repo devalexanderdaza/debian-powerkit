@@ -66,11 +66,12 @@ main() {
                         --backtitle "Asistente de Gestión del Sistema" \
                         --title "Menú Principal" \
                         --menu "Selecciona una opción:" \
-                        15 60 4 \
+                        17 60 5 \
                         1 "Configurar Entorno de Desarrollo" \
-                        2 "Optimizar el Sistema" \
-                        3 "Ejecutar Limpieza Avanzada" \
-                        4 "Salir" \
+                        2 "Configurar Zsh + Oh My Zsh + Powerlevel10k" \
+                        3 "Optimizar el Sistema" \
+                        4 "Ejecutar Limpieza Avanzada" \
+                        5 "Salir" \
                         2>&1 >/dev/tty)
 
         clear
@@ -82,12 +83,18 @@ main() {
                 read -p "Presiona Enter para continuar..."
                 ;;
             2)
+                log_info "Iniciando configuración de Zsh con Oh My Zsh y Powerlevel10k..."
+                bash "$SCRIPT_DIR/setup/setup_zsh.sh"
+                log_info "Configuración de Zsh finalizada. Volviendo al menú principal."
+                read -p "Presiona Enter para continuar..."
+                ;;
+            3)
                 log_info "Iniciando el script de optimización del sistema..."
                 bash "$SCRIPT_DIR/optimization/optimize.sh"
                 log_info "Script de optimización finalizado. Volviendo al menú principal."
                 read -p "Presiona Enter para continuar..."
                 ;;
-            3)
+            4)
                 log_info "Iniciando el script de limpieza avanzada..."
                 bash "$SCRIPT_DIR/tools/cleanup.sh"
                 log_info "Script de limpieza finalizado. Volviendo al menú principal."
@@ -95,7 +102,7 @@ main() {
                 ;;
 
 
-            4)
+            5)
                 log_info "Saliendo del asistente. ¡Hasta luego!"
                 break
                 ;;

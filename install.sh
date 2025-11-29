@@ -154,6 +154,7 @@ set_permissions() {
     
     chmod +x "$INSTALL_DIR/run.sh"
     chmod +x "$INSTALL_DIR/setup/setup.sh"
+    chmod +x "$INSTALL_DIR/setup/setup_zsh.sh"
     chmod +x "$INSTALL_DIR/optimization/optimize.sh"
     chmod +x "$INSTALL_DIR/tools/cleanup.sh"
     

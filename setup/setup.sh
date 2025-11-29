@@ -172,6 +172,17 @@ install_ides() {
     fi
 }
 
+# 6. Configuración de Zsh con Oh My Zsh y Powerlevel10k
+install_zsh_setup() {
+    log_info "Iniciando configuración de Zsh..."
+    local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    if [ -f "$script_dir/setup_zsh.sh" ]; then
+        bash "$script_dir/setup_zsh.sh"
+    else
+        log_error "No se encontró el script setup_zsh.sh"
+    fi
+}
+
 
 # --- Menú Interactivo y Ejecución Principal ---
 
@@ -187,13 +198,14 @@ main() {
         2 "Instalar Node.js (vía NVM)" on
         3 "Instalar Python 3, pip y venv" on
         4 "Instalar Visual Studio Code" on
+        5 "Configurar Zsh + Oh My Zsh + Powerlevel10k" on
     )
 
     CHOICES=$(dialog --clear \
                     --backtitle "Asistente de Configuración de Entorno de Desarrollo" \
                     --title "Selección de Componentes" \
                     --checklist "Usa la barra espaciadora para seleccionar/deseleccionar. Los componentes preseleccionados ya están instalados o son recomendados." \
-                    18 70 5 \
+                    20 75 6 \
                     "${OPTIONS[@]}" \
                     2>&1 >/dev/tty)
 
@@ -225,6 +237,12 @@ main() {
             install_ides
         else
             log_info "Omitiendo VS Code."
+        fi
+        
+        if [[ $CHOICES == *"5"* ]]; then
+            install_zsh_setup
+        else
+            log_info "Omitiendo configuración de Zsh."
         fi
     else
         log_warn "No se seleccionó ningún componente para instalar."
