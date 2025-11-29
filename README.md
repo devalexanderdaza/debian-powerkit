@@ -3,6 +3,7 @@
 [![Debian](https://img.shields.io/badge/Debian-13%20(Trixie)-A81D33?logo=debian)](https://www.debian.org/)
 [![Shell Script](https://img.shields.io/badge/Shell-Bash-4EAA25?logo=gnu-bash)](https://www.gnu.org/software/bash/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/devalexanderdaza/debian-powerkit)](https://github.com/devalexanderdaza/debian-powerkit/releases)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 > **Tu kit de herramientas definitivo para Debian 13** - Automatiza la configuración, optimización y mantenimiento de tu sistema con un solo comando.
