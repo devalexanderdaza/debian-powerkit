@@ -5,37 +5,48 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
-## [No publicado]
+## [1.1.0] - 2025-11-28
 
-### Añadido
+### 🎁 Instalador de Un Comando
 
-- **Instalador de Un Comando** (`install.sh`)
-  - Instalación rápida con `curl` o `wget`
+#### Añadido
+
+- **Instalador Automático** (`install.sh`)
+  - Instalación rápida con un solo comando usando `curl` o `wget`
   - Instalación automática de dependencias (git, curl/wget)
-  - Crea enlace simbólico en `~/.local/bin` para acceso fácil
-  - Añade automáticamente al PATH
+  - Crea enlace simbólico en `~/.local/bin` para acceso global
+  - Añade automáticamente al PATH del usuario
   - Salida con colores e indicadores de progreso
   - Verificación del sistema operativo
-  - Manejo de instalaciones existentes
+  - Manejo inteligente de instalaciones existentes
   - Banner ASCII artístico
   - Ejemplos de uso después de la instalación
+  - Tiempo de instalación: ~30 segundos
 
-- **Desinstalador** (`uninstall.sh`)
-  - Desinstalación segura con confirmación
+- **Desinstalador Completo** (`uninstall.sh`)
+  - Desinstalación segura con confirmación del usuario
   - Elimina directorio de instalación y enlaces simbólicos
-  - Limpia configuración del PATH
-  - Opción para revertir optimizaciones del sistema
-  - Restauración desde backups
-  - Eliminación de paquetes instalados (zram, preload)
+  - Limpia automáticamente la configuración del PATH (.bashrc, .zshrc)
+  - **Opción para revertir optimizaciones del sistema**
+  - Restauración automática desde backups
+  - Eliminación de paquetes instalados (zram-tools, preload)
+  - Deshabilitación de servicios systemd (cpupower)
   - Manejo inteligente de permisos (sudo cuando es necesario)
+  - Banner y salida colorida
 
-### Cambiado
+#### Cambiado
 
 - **README.md** actualizado con:
-  - Sección de instalación rápida con comando de una línea
-  - Instrucciones de desinstalación
+  - Sección de instalación rápida destacada con comando de una línea
+  - Instrucciones detalladas de desinstalación
   - Badge de release version
-  - Mejora en la documentación de instalación
+  - Comparación entre instalación manual y automática
+  - Mejora en la estructura de documentación
+
+- **Experiencia de usuario**:
+  - Instalación 10x más rápida (de ~5 min a ~30 seg)
+  - Comando global `debian-powerkit` disponible desde cualquier lugar
+  - Ya no es necesario navegar al directorio de instalación
 
 ## [1.0.0] - 2025-11-28
 
@@ -110,4 +121,5 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+[1.1.0]: https://github.com/devalexanderdaza/debian-powerkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/devalexanderdaza/debian-powerkit/releases/tag/v1.0.0
